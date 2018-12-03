@@ -5,7 +5,7 @@ import userReducer from './reducers/userReducer'
 
 const reducers = combineReducers({
     notify: notificationReducer,
-    users: userReducer })
+    userdata: userReducer })
 
 const store = createStore(reducers)
 
