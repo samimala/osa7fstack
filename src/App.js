@@ -2,11 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BlogList from './components/BlogList'
 import blogService from './services/blogs'
+import userService from './services/users'
 import loginService from './services/login'
 import Togglable from './components/Togglable'
 import CreateBlogForm from './components/CreateBlogForm'
 import { showInfoNotification, showErrorNotification, hideNotification} from './reducers/notificationReducer'
 import Notification from './components/Notification'
+import { showUsers } from './reducers/userReducer'
+import Users from './components/Users'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +35,9 @@ class App extends React.Component {
       const user = JSON.parse(loggedUserJSON)
       this.setState({user})
       blogService.setToken(user.token)
+      const usersRetrieved = await userService.getUsers()
+      console.log('Got users as', usersRetrieved)
+      this.props.showUsers(usersRetrieved)
     }
   } 
 
@@ -50,6 +57,9 @@ class App extends React.Component {
         user: response
       })
       blogService.setToken(response.token)
+      const usersRetrieved = await userService.getUsers()
+      console.log('Got users as', usersRetrieved)
+      this.props.showUsers(usersRetrieved)
     } 
     catch (exception) {
       console.log('Showing error message in login')
@@ -157,7 +167,17 @@ class App extends React.Component {
       </div>
     )
 
-
+    const users = () => (
+      <div>
+        <p>
+          {this.state.user.username} 
+          {' logged in '}
+          <button onClick={this.onLogout}>Logout</button>
+        </p>
+        <Users />
+      </div>
+    )
+    
     const blogs = () => (
       <div>
         <Notification /> 
@@ -184,18 +204,21 @@ class App extends React.Component {
             onDeleteBlog={this.deleteBlog()}
          />
       </div>
-    )
-    
+    )    
     if (this.state.user === null) {
       console.log('loginForm about to print')
       return loginForm()
-    } 
-    return blogs()
+    }
+    return users() 
+    //return blogs()
   }
 }
 
 export default connect(
   null,
-  { showInfoNotification, showErrorNotification, hideNotification}
-)
-(App)
+  { showInfoNotification, 
+    showErrorNotification, 
+    hideNotification,
+    showUsers
+  }
+)(App)
