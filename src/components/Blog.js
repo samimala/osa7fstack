@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 class Blog extends React.Component {
   constructor(props) {
@@ -24,12 +25,14 @@ class Blog extends React.Component {
     const hideWhenCompressed = { display: this.state.compressedForm ? 'none': ''}
 
     return (
-      <div style={this.blogStyle} className='allContent'>      
-        <span onClick={this.toggleCompression} className='toggler'> 
-           {this.props.title}
-        </span> 
+      <div style={this.blogStyle} className='allContent'>
+        <Link to={"/blogs/"+this.props.id}>
+          {this.props.title}        
+        </Link>
         {' '}
-        {this.props.author}
+        <span onClick={this.toggleCompression} className='toggler'> 
+          {this.props.author}
+        </span> 
         <div style={hideWhenCompressed} className='toggleContent'>
           <div>
             <a href={this.props.url}>{this.props.url}</a> 
@@ -43,7 +46,7 @@ class Blog extends React.Component {
             {'Added by '} {this.props.user? this.props.user.name : 'unknown'}
           </div>
           <div>
-            {(!this.props.user || this.props.currentLogin.username===this.props.user.username) &&          
+            {(!this.props.user || this.props.loginUser===this.props.user.username) &&          
               <button onClick={this.props.onDeleteBlog}>delete</button>}
           </div>
         </div>
