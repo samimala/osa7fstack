@@ -8,7 +8,7 @@ import { setBlogs, addBlog } from './reducers/blogsReducer'
 import Notification from './components/Notification'
 import { showUsers } from './reducers/userReducer'
 import Users from './components/Users'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import LoginForm from './components/LoginForm'
 import { loginUser, logoutUser } from './reducers/loginReducer'
 import BlogsOfUser from './components/BlogsOfUser'
@@ -17,9 +17,11 @@ import SingleBlog from './components/SingleBlog'
 
 const LoggedInUser = (props) => (
   <div>
-    {props.username} 
-    {' logged in '}
-    <button onClick={props.onLogout}>Logout</button>
+      <Link to="/blogs">Blogs</Link> &nbsp;
+      <Link to="/users">Users</Link> &nbsp;
+      {props.username} 
+      {' logged in '}
+      <button onClick={props.onLogout}>Logout</button>
   </div>
 
 )
@@ -109,13 +111,13 @@ class App extends React.Component {
     return (
       <div>
       <Notification />   
-      <LoggedInUser
-         username={this.props.loggedInUser.username}
-         onLogout={this.onLogout}
-      />
         
       <Router> 
         <div>
+        <LoggedInUser
+           username={this.props.loggedInUser.username}
+           onLogout={this.onLogout}
+          />
           <Route exact path="/" render={()=> <BlogView />} />
           <Route exact path="/users" render={()=> <Users />} />
           <Route exact path="/blogs" render={()=> <BlogView />} />
