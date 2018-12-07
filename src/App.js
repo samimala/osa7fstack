@@ -36,7 +36,7 @@ class App extends React.Component {
   }
   
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     console.log('componentDidMount')
     const loggedUserJSON = window.localStorage.getItem('loggerBlogSystemUser')
     if (loggedUserJSON) {
@@ -116,6 +116,7 @@ class App extends React.Component {
         
       <Router> 
         <div>
+          <Route exact path="/" render={()=> <BlogView />} />
           <Route exact path="/users" render={()=> <Users />} />
           <Route exact path="/blogs" render={()=> <BlogView />} />
           <Route exact path="/blogs/:id" render={({match}) => (
