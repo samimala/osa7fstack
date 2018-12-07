@@ -13,6 +13,7 @@ const notificationReducer = (state=notificationAtStart, action) => {
 }
 
 export const showInfoNotification = (text) => {
+  console.log('Info notification called ', text)
   return {
     type: 'SHOW_NOTIFICATION',
     kind: 'Info',

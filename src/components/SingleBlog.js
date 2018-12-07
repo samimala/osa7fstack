@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import blogService from '../services/blogs'
 import { addLikeToBlog } from '../reducers/blogsReducer'
-
+import BlogComments from './BlogComments'
+import BlogCommentForm from './BlogCommentForm'
 
 
 class SingleBlog extends React.Component {
@@ -41,6 +42,11 @@ class SingleBlog extends React.Component {
          </div>
            {"added by "}
            {blog.user.name}
+         <BlogComments comments={blog.comments} />  
+         <BlogCommentForm 
+           blogid={blog.id}
+           blogtitle={blog.title}
+         />  
       </div>
     )
   }

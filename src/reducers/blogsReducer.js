@@ -13,6 +13,10 @@ const blogsReducer = (state=[], action) => {
     return  nextstate
   case 'DELETE_BLOG':
     return [...state.filter(blog => blog.id != action.blog.id)]
+  case 'ADD_COMMENT':
+    console.log('Comment reducer: ', action)
+    return state.map(blog=>({...blog, 
+      comments: (blog.id!==action.id)?blog.comments:blog.comments.concat([action.comment])}))
   default:
   }
   return state
@@ -48,6 +52,13 @@ export const addBlog = (blog) => {
   }
 }
 
+export const addCommentToBlog = (data) => {
+  return {
+    type: 'ADD_COMMENT',
+    id: data.blogid,
+    comment: data.comment
+  }
+}
 export default blogsReducer
 
 
