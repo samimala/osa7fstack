@@ -4,7 +4,7 @@ const loginReducer = (state={}, action) => {
     console.log('Loginuser saved as: ', action.user)
     return action.user
   case 'LOGOUT':
-    return null  
+    return null
   default:
   }
   return state

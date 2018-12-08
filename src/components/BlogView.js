@@ -18,7 +18,7 @@ class BlogView extends React.Component {
       user: blog.user.token
     }
     console.log('Increase likes for blog: ', blog.title)
-    const response = await blogService.update(updatedBlog)  
+    await blogService.update(updatedBlog)
     //const blogs = await blogService.getAll()
     //console.log('Updating blogs to ', blogs)
     this.props.addLikeToBlog(blog.id)
@@ -30,7 +30,7 @@ class BlogView extends React.Component {
       return
     }
     try {
-      const response = await blogService.deleteBlog(blog)  
+      await blogService.deleteBlog(blog)
     }
     catch(exception) {
       window.alert('Could not delete blog: ' + blog.title)
@@ -50,7 +50,7 @@ class BlogView extends React.Component {
         <Togglable buttonLabel="Create new blog" ref={component=>this.createBlogForm=component}>
           <CreateBlogForm toggleVisibility={this.toggleVisibility} />
         </Togglable>
-        <BlogList 
+        <BlogList
           onIncLikes={this.incBlogLikes()}
           onDeleteBlog={this.deleteBlog()}
         />

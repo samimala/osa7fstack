@@ -10,7 +10,7 @@ class BlogsOfUser extends React.Component {
     console.log('Showing one user of id ', this.props)
     const userToShow = this.props.users.find(user=>user.id===this.props.filterid)
     console.log('user to show', userToShow)
-  
+
     return (
       <div>
         <h1>{userToShow.name}</h1>
@@ -31,7 +31,7 @@ class BlogsOfUser extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users
-  }       
+  }
 }
 export default connect(
   mapStateToProps,

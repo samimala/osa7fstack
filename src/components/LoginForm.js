@@ -7,7 +7,7 @@ class LoginForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-    }            
+    }
   }
 
   handleLoginFieldChange = (event) => {
@@ -18,34 +18,34 @@ class LoginForm extends React.Component {
     event.preventDefault()
     console.log('About to call onLogin', this.state)
     this.props.onLogin(this.state)
-    this.setState({ 
-        username: '', 
-        password: '',
-      })
+    this.setState({
+      username: '',
+      password: '',
+    })
   }
 
   form = () => (
     <div className="loginform">
-    <h2>login</h2>
-    <form onSubmit={this.handleLoginRequest}>
-        <div>           
-        <b>username</b>
-        <input 
-            type="text" 
-            name="username" 
+      <h2>login</h2>
+      <form onSubmit={this.handleLoginRequest}>
+        <div>
+          <b>username</b>
+          <input
+            type="text"
+            name="username"
             value={this.state.username}
             onChange={this.handleLoginFieldChange}/>
         </div>
         <div>
-        <b>password</b>
-        <input 
-            type="text" 
-            name="password" 
+          <b>password</b>
+          <input
+            type="text"
+            name="password"
             value={this.state.password}
             onChange={this.handleLoginFieldChange}/>
         </div>
         <button type="submit">login</button>
-    </form>
+      </form>
     </div>
   )
 

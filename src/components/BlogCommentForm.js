@@ -9,7 +9,7 @@ class BlogCommentForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        comment: ''
+      comment: ''
     }
   }
 
@@ -24,7 +24,7 @@ class BlogCommentForm extends React.Component {
     const response = await blogService.addComment(this.props.blogid,this.state)
     console.log('Response from adding comment', response)
     this.props.addCommentToBlog({blogid: this.props.blogid, comment: this.state.comment})
-    this.props.showInfoNotification("added comment '" + this.state.comment + "' to " + this.props.blogtitle)
+    this.props.showInfoNotification('added comment "' + this.state.comment + '" to ' + this.props.blogtitle)
     setTimeout(()=> this.props.hideNotification(), 5000)
     this.setState({comment: ''})
   }
@@ -34,11 +34,11 @@ class BlogCommentForm extends React.Component {
       <div>
         <Form onSubmit={this.addComment}>
           <Form.Input
-            type="text" 
-            name="comment" 
+            type="text"
+            name="comment"
             value={this.state.comment}
             onChange={this.updateCommentState} />
-          <Form.Button type="submit" className="ui fade animated button" role="button"> 
+          <Form.Button type="submit" className="ui fade animated button" role="button">
             <div className="visible content">Add comment</div>
             <div className="hidden content">Add comment - are You really sure?</div>
           </Form.Button>
@@ -49,7 +49,7 @@ class BlogCommentForm extends React.Component {
 }
 
 export default connect(
-    null,
-    { addCommentToBlog,
-      showInfoNotification, 
-      hideNotification })(BlogCommentForm)
+  null,
+  { addCommentToBlog,
+    showInfoNotification,
+    hideNotification })(BlogCommentForm)

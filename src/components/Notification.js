@@ -7,8 +7,8 @@ const Notification = (props) => {
     return null
   }
   console.log('Writing message', props)
-  return (<div className={(props.kind==='Info')?"notification":
-    (props.kind==='Error')?"error":""}>{props.text}</div>)
+  return (<div className={(props.kind==='Info')?'notification':
+    (props.kind==='Error')?'error':''}>{props.text}</div>)
 }
 
 const mapStateToProps = (state) => {

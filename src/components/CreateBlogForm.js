@@ -3,19 +3,18 @@ import { connect } from 'react-redux'
 import { showInfoNotification, showErrorNotification, hideNotification} from '../reducers/notificationReducer'
 import blogService from '../services/blogs'
 import { addBlog } from '../reducers/blogsReducer'
-import Togglable from './Togglable'
 
 class CreateBlogForm extends React.Component {
   constructor(props) {
     super(props)
-      this.state = {
-        newBlogUrl: '',
-        newBlogAuthor: '',
-        newBlogTitle: '',
-        createBlogVisible: false      
-      }
+    this.state = {
+      newBlogUrl: '',
+      newBlogAuthor: '',
+      newBlogTitle: '',
+      createBlogVisible: false
+    }
   }
-      
+
   handleBlogFieldChange = (event) => {
     event.preventDefault()
     const key = event.target.name
@@ -36,9 +35,8 @@ class CreateBlogForm extends React.Component {
       console.log('Sending new blog:', newBlog)
       const response = await blogService.create(newBlog)
       console.log('createBlog response', response)
-      console.log('Toimiiko: ',"a new blog '" + response.title + "' by " + response.author + " added")
       this.props.addBlog(newBlog)
-      this.props.showInfoNotification("a new blog '" + response.title + "' by " + response.author + " added")
+      this.props.showInfoNotification('a new blog "' + response.title + '" by ' + response.author + ' added')
       setTimeout(()=> this.props.hideNotification(), 5000)
     }
     catch (exception) {
@@ -49,36 +47,36 @@ class CreateBlogForm extends React.Component {
 
   render() {
     return (
-    <div>
+      <div>
         <h2>create new</h2>
         <form onSubmit={this.createBlog}>
-        <div>
+          <div>
             <b>title</b>
-            <input 
-            type="text" 
-            name="newBlogTitle" 
-            value={this.state.newBlogTitle}
-            onChange={this.handleBlogFieldChange}/>
-        </div>
-        <div>
+            <input
+              type="text"
+              name="newBlogTitle"
+              value={this.state.newBlogTitle}
+              onChange={this.handleBlogFieldChange}/>
+          </div>
+          <div>
             <b>author</b>
-            <input 
-            type="text" 
-            name="newBlogAuthor" 
-            value={this.state.newBlogAuthor}
-            onChange={this.handleBlogFieldChange}/>
-        </div>
-        <div>
+            <input
+              type="text"
+              name="newBlogAuthor"
+              value={this.state.newBlogAuthor}
+              onChange={this.handleBlogFieldChange}/>
+          </div>
+          <div>
             <b>url</b>
-            <input 
-            type="text" 
-            name="newBlogUrl" 
-            value={this.state.newBlogUrl}
-            onChange={this.handleBlogFieldChange}/>
-        </div>
-        <button type="submit">create</button> 
+            <input
+              type="text"
+              name="newBlogUrl"
+              value={this.state.newBlogUrl}
+              onChange={this.handleBlogFieldChange}/>
+          </div>
+          <button type="submit">create</button>
         </form>
-    </div>
+      </div>
     )
   }
 }
@@ -86,8 +84,7 @@ class CreateBlogForm extends React.Component {
 
 export default connect(
   null,
-  { showInfoNotification, 
-    showErrorNotification, 
+  { showInfoNotification,
+    showErrorNotification,
     hideNotification,
-    addBlog}
- )(CreateBlogForm)
+    addBlog})(CreateBlogForm)

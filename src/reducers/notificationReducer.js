@@ -17,7 +17,7 @@ export const showInfoNotification = (text) => {
   return {
     type: 'SHOW_NOTIFICATION',
     kind: 'Info',
-    text  
+    text
   }
 }
 
@@ -25,15 +25,14 @@ export const showErrorNotification = (text) => {
   return {
     type: 'SHOW_NOTIFICATION',
     kind: 'Error',
-    text: text  
+    text: text
   }
 }
-  
-  
+
 export const hideNotification = () => {
-    return {
-        type: 'HIDE_NOTIFICATION'
-    }
+  return {
+    type: 'HIDE_NOTIFICATION'
+  }
 }
 
 export default notificationReducer
