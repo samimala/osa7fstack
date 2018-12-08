@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { showInfoNotification, showErrorNotification, hideNotification} from '../reducers/notificationReducer'
 
 
 const Notification = (props) => {
@@ -12,15 +11,14 @@ const Notification = (props) => {
     (props.kind==='Error')?"error":""}>{props.text}</div>)
 }
 
-const mapStateToProps = (state) => (
-  {
-    text: state.text,
-    kind: state.kind
+const mapStateToProps = (state) => {
+  return {
+    text: state.notify.text,
+    kind: state.notify.kind
   }
-)
+}
 
 export default connect(
   mapStateToProps,
-  { showInfoNotification, 
-    showErrorNotification, 
-    hideNotification})(Notification)
+  null
+)(Notification)

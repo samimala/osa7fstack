@@ -114,9 +114,9 @@ class App extends React.Component {
         
       <Router> 
         <div>
-        <LoggedInUser
-           username={this.props.loggedInUser.username}
-           onLogout={this.onLogout}
+          <LoggedInUser
+            username={this.props.loggedInUser.username}
+            onLogout={this.onLogout}
           />
           <Route exact path="/" render={()=> <BlogView />} />
           <Route exact path="/users" render={()=> <Users />} />
