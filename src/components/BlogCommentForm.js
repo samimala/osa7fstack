@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import blogService from '../services/blogs'
 import { addCommentToBlog } from '../reducers/blogsReducer'
 import { showInfoNotification, hideNotification } from '../reducers/notificationReducer'
+import { Form } from 'semantic-ui-react'
 
 class BlogCommentForm extends React.Component {
   constructor(props) {
@@ -31,14 +32,17 @@ class BlogCommentForm extends React.Component {
   render() {
     return(
       <div>
-        <form onSubmit={this.addComment}>
-          <input 
+        <Form onSubmit={this.addComment}>
+          <Form.Input
             type="text" 
             name="comment" 
             value={this.state.comment}
-            onChange={this.updateCommentState}/>
-          <button type="submit">Add comment</button>
-        </form>
+            onChange={this.updateCommentState} />
+          <Form.Button type="submit" className="ui fade animated button" role="button"> 
+            <div className="visible content">Add comment</div>
+            <div className="hidden content">Add comment - are You really sure?</div>
+          </Form.Button>
+        </Form>
       </div>
     )
   }

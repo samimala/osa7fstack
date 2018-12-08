@@ -8,10 +8,6 @@ import { addLikeToBlog, deleteBlog } from '../reducers/blogsReducer'
 
 class BlogView extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   incBlogLikes = () =>(blog) => async () => {
     const updatedBlog = {
       id: blog.id,

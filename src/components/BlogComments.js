@@ -1,13 +1,17 @@
 import React from 'react'
+import { List, Icon } from 'semantic-ui-react'
+
 const BlogComments = (props) => (    
     <div>
         <h2>Comments</h2>
-        <ul>
+        <List>
             {props.comments.map(comment=>
-              <li key={props.comments.indexOf(comment)}>
+              <List.Item   
+                key={props.comments.indexOf(comment)}>
+                <Icon className="heartbeat"/> &nbsp;
                 {comment}
-              </li>)}
-        </ul>
+              </List.Item>)}
+        </List>
     </div>
 )
 

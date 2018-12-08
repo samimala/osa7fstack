@@ -4,10 +4,6 @@ import { connect } from 'react-redux'
 
 class BlogsOfUser extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     console.log('Filter is: ', this.props.filterid)
     //props.setUserFilter(props.id)

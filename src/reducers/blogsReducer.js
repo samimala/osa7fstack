@@ -12,7 +12,7 @@ const blogsReducer = (state=[], action) => {
     console.log('Next state after addlike:', nextstate)
     return  nextstate
   case 'DELETE_BLOG':
-    return [...state.filter(blog => blog.id != action.blog.id)]
+    return [...state.filter(blog => blog.id !== action.blog.id)]
   case 'ADD_COMMENT':
     console.log('Comment reducer: ', action)
     return state.map(blog=>({...blog, 

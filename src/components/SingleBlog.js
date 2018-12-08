@@ -4,12 +4,9 @@ import blogService from '../services/blogs'
 import { addLikeToBlog } from '../reducers/blogsReducer'
 import BlogComments from './BlogComments'
 import BlogCommentForm from './BlogCommentForm'
-
+import { Divider } from 'semantic-ui-react'
 
 class SingleBlog extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   incBlogLikes = (blog) => async () => {
     const updatedBlog = {
@@ -23,7 +20,7 @@ class SingleBlog extends React.Component {
     console.log('Increase likes for blog: ', blog.title)
     const response = await blogService.update(updatedBlog)  
     //const blogs = await blogService.getAll()
-    //console.log('Updating blogs to ', blogs)
+    console.log('Response from likes increase ', response)
     this.props.addLikeToBlog(blog.id)
   }
       
@@ -42,7 +39,13 @@ class SingleBlog extends React.Component {
          </div>
            {"added by "}
            {blog.user.name}
-         <BlogComments comments={blog.comments} />  
+         <Divider className="ui horizontal divider">
+           The intelligent part
+         </Divider>         
+         <BlogComments comments={blog.comments} />
+         <Divider className="ui horizontal divider">
+           Opprotunity for You to participate below
+         </Divider>  
          <BlogCommentForm 
            blogid={blog.id}
            blogtitle={blog.title}

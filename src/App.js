@@ -14,14 +14,21 @@ import { loginUser, logoutUser } from './reducers/loginReducer'
 import BlogsOfUser from './components/BlogsOfUser'
 import BlogView from './components/BlogView'
 import SingleBlog from './components/SingleBlog'
+import { Container, Menu } from 'semantic-ui-react'
 
 const LoggedInUser = (props) => (
   <div>
-      <Link to="/blogs">Blogs</Link> &nbsp;
-      <Link to="/users">Users</Link> &nbsp;
-      {props.username} 
-      {' logged in '}
-      <button onClick={props.onLogout}>Logout</button>
+    <Menu secondary className="ui secondary pointing menu">
+      <Menu.Item as={ Link } to="/blogs">Blogs</Menu.Item>
+      <Menu.Item as={ Link } to="/users">Users</Menu.Item>
+      <Menu.Item
+        name="Logout"
+        onClick={props.onLogout}
+      />
+      <Menu.Item>
+        <b>{props.username}{' logged in '}</b>
+      </Menu.Item>
+    </Menu>
   </div>
 
 )
@@ -100,15 +107,18 @@ class App extends React.Component {
     if (this.props.loggedInUser === null) {
       console.log('loginForm about to print')
       return (
+        <Container>
         <div>
         <Notification /> 
         <LoginForm onLogin={this.login} />
         </div>
+        </Container>
       )
     }
 
     console.log('LoggedInUser is: ', this.props.loggedInUser)
     return (
+      <Container>
       <div>
       <Notification />   
         
@@ -133,6 +143,7 @@ class App extends React.Component {
         </div>
       </Router>
       </div>
+      </Container>
     )
     //return blogs()
     //return users()
