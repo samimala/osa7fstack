@@ -1,3 +1,4 @@
+import userService from '../services/users'
 //const initialState = { users: [], filter: null }
 
 const userReducer = (state=[], action) => {
@@ -10,11 +11,14 @@ const userReducer = (state=[], action) => {
   return state
 }
 
-export const showUsers = (users) => {
-  console.log('ShowUSers gets', users)
-  return {
-    type: 'STORE_USERS',
-    userlist: users
+export const getUsers = () => {
+  return async(dispatch) => {
+    const users = await userService.getUsers()
+    console.log('ShowUSers gets', users)
+    dispatch ({
+      type: 'STORE_USERS',
+      userlist: users
+    })
   }
 }
 

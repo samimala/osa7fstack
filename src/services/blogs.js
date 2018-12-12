@@ -46,10 +46,12 @@ const create = async (newObject) => {
   return response.data
 }
 
-const addComment = async (blogid, newComment) => {
+const addComment = async (blogid, comment) => {
   const commentUrl = baseUrl + '/' + blogid + '/comments'
-  const response = await axios.post(commentUrl, newComment)
+  console.log('SEnding comment to db: ', comment, commentUrl)
+  const response = await axios.post(commentUrl, {comment})
   console.log('Response from adding comment to DB is: ', response)
+  return response
 }
 
 export default { getAll, setToken, create, update, deleteBlog, addComment }
