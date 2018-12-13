@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { showInfoNotification, showErrorNotification, hideNotification} from '../reducers/notificationReducer'
-import blogService from '../services/blogs'
 import { addBlog } from '../reducers/blogsReducer'
 
 class CreateBlogForm extends React.Component {
@@ -32,11 +31,8 @@ class CreateBlogForm extends React.Component {
         title: this.state.newBlogTitle,
         author: this.state.newBlogAuthor
       }
-      console.log('Sending new blog:', newBlog)
-      const response = await blogService.create(newBlog)
-      console.log('createBlog response', response)
       this.props.addBlog(newBlog)
-      this.props.showInfoNotification('a new blog "' + response.title + '" by ' + response.author + ' added')
+      this.props.showInfoNotification('a new blog "' + newBlog.title + '" by ' + newBlog.author + ' added')
       setTimeout(()=> this.props.hideNotification(), 5000)
     }
     catch (exception) {

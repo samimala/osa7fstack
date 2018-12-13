@@ -1,31 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import blogService from '../services/blogs'
-import { addLikeToBlog } from '../reducers/blogsReducer'
+import { addLikeToBlog  } from '../reducers/blogsReducer'
 import BlogComments from './BlogComments'
 import BlogCommentForm from './BlogCommentForm'
 import { Divider } from 'semantic-ui-react'
 
 class SingleBlog extends React.Component {
 
-  incBlogLikes = (blog) => async () => {
-    const updatedBlog = {
-      id: blog.id,
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes+1,
-      user: blog.user.token
-    }
+  incBlogLikes = (blog) => () => {
     console.log('Increase likes for blog: ', blog.title)
-    const response = await blogService.update(updatedBlog)
     //const blogs = await blogService.getAll()
-    console.log('Response from likes increase ', response)
-    this.props.addLikeToBlog(blog.id)
+    this.props.addLikeToBlog(blog)
   }
 
   render() {
-    const blog = this.props.blogs.find(blog=>blog.id===this.props.blogid)
+    console.log('blogs: ', this.props.blog)
+    const blog = this.props.blog
 
     console.log('Single blog', blog)
     return(
@@ -55,12 +45,8 @@ class SingleBlog extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    blogs: state.blogs
-  }
-}
+
 
 export default connect (
-  mapStateToProps,
-  {addLikeToBlog})(SingleBlog)
+  null,
+  { addLikeToBlog })(SingleBlog)

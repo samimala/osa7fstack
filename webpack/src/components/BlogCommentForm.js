@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import blogService from '../services/blogs'
 import { addCommentToBlog } from '../reducers/blogsReducer'
 import { showInfoNotification, hideNotification } from '../reducers/notificationReducer'
 import { Form } from 'semantic-ui-react'
@@ -21,9 +20,7 @@ class BlogCommentForm extends React.Component {
   addComment = async (event) => {
     event.preventDefault()
     console.log('Sending new comment:', this.state)
-    const response = await blogService.addComment(this.props.blogid,this.state)
-    console.log('Response from adding comment', response)
-    this.props.addCommentToBlog({blogid: this.props.blogid, comment: this.state.comment})
+    this.props.addCommentToBlog(this.props.blogid, this.state.comment)
     this.props.showInfoNotification('added comment "' + this.state.comment + '" to ' + this.props.blogtitle)
     setTimeout(()=> this.props.hideNotification(), 5000)
     this.setState({comment: ''})

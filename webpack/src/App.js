@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import blogService from './services/blogs'
-import userService from './services/users'
 import loginService from './services/login'
 import { showInfoNotification, showErrorNotification, hideNotification} from './reducers/notificationReducer'
-import { setBlogs, addBlog } from './reducers/blogsReducer'
+import { getBlogs, addBlog } from './reducers/blogsReducer'
 import Notification from './components/Notification'
-import { showUsers } from './reducers/userReducer'
+import { getUsers } from './reducers/userReducer'
 import Users from './components/Users'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import LoginForm from './components/LoginForm'
@@ -43,7 +42,6 @@ class App extends React.Component {
       createBlogVisible: false,
     }
   }
-  
 
   componentDidMount = () => {
     console.log('componentDidMount')
@@ -52,27 +50,11 @@ class App extends React.Component {
       const user = JSON.parse(loggedUserJSON)
       blogService.setToken(user.token)
       this.props.loginUser(user)
-      this.getData()
+      this.props.getBlogs()
+      this.props.getUsers()
     }
-  } 
+  }
 
-//  getDataNotInUse = async () => {
-//    console.log('GetData called')
-//    const blogs = await blogService.getAll()
-//    const usersRetrieved = await userService.getUsers()
-//    console.log('Setting blogs and userlist', {blogs, usersRetrieved})
-//    this.props.setBlogs(blogs)
-//  //console.log('Got users as', usersRetrieved)
-//    this.props.showUsers(usersRetrieved)
-//    console.log('GetData ends')
-//  } 
-
-  getData = () => {
-    console.log('GetData called')
-    blogService.getAll().then(blogs => this.props.setBlogs(blogs))
-    userService.getUsers().then(usersRetrieved=>this.props.showUsers(usersRetrieved))
-    console.log('GetData ends')
-  } 
 
   login = async (userdata) => {
     console.log('Login - username: ', userdata.username, ' password: ', userdata.password)
@@ -85,10 +67,9 @@ class App extends React.Component {
       this.props.loginUser(response)
       window.localStorage.setItem('loggerBlogSystemUser', JSON.stringify(response))
       blogService.setToken(response.token)
-      const usersRetrieved = await userService.getUsers()
-      console.log('Got users as', usersRetrieved)
-      this.props.showUsers(usersRetrieved)
-    } 
+      this.props.getUsers()
+      console.log('Got users as', this.props.users)
+    }
     catch (exception) {
       console.log('Showing error message in login')
       this.props.showErrorNotification('wrong username or pasword')
@@ -101,17 +82,17 @@ class App extends React.Component {
     window.localStorage.removeItem('loggerBlogSystemUser')
     this.props.logoutUser()
   }
-  
+
   render() {
-    console.log('App rendering: ', this.state)   
+    console.log('App rendering: ', this.state)
     if (this.props.loggedInUser === null) {
       console.log('loginForm about to print')
       return (
         <Container>
-        <div>
-        <Notification /> 
-        <LoginForm onLogin={this.login} />
-        </div>
+          <div>
+            <Notification />
+            <LoginForm onLogin={this.login} />
+          </div>
         </Container>
       )
     }
@@ -119,49 +100,48 @@ class App extends React.Component {
     console.log('LoggedInUser is: ', this.props.loggedInUser)
     return (
       <Container>
-      <div>
-      <Notification />   
-        
-      <Router> 
         <div>
-          <LoggedInUser
-            username={this.props.loggedInUser.username}
-            onLogout={this.onLogout}
-          />
-          <Route exact path="/" render={()=> <BlogView />} />
-          <Route exact path="/users" render={()=> <Users />} />
-          <Route exact path="/blogs" render={()=> <BlogView />} />
-          <Route exact path="/blogs/:id" render={({match}) => (
-            <SingleBlog blogid={match.params.id}/>)} />
+          <Notification />
+          <Router>
+            <div>
+              <LoggedInUser
+                username={this.props.loggedInUser.username}
+                onLogout={this.onLogout}
+              />
+              <Route exact path="/" render={()=> <BlogView />} />
+              <Route exact path="/users" render={()=> <Users />} />
+              <Route exact path="/blogs" render={()=> <BlogView />} />
+              <Route exact path="/blogs/:id" render={({match}) => (
+                <SingleBlog blog={this.props.blogs.find(blog=>blog.id===match.params.id)}/>)}/>
 
-          <Route exact path="/users/:id" render={({match})=> {
-            console.log('Route users-id', match)
-            return (
-              <BlogsOfUser filterid={match.params.id} />
-            )}} 
-          />
+              <Route exact path="/users/:id" render={({match})=> {
+                console.log('This: ', this)
+                console.log('Route users-id', match)
+                return (
+                  <BlogsOfUser filterid={match.params.id} />
+                )}}
+              />
+            </div>
+          </Router>
         </div>
-      </Router>
-      </div>
       </Container>
     )
-    //return blogs()
-    //return users()
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    loggedInUser: state.loginUser
+    loggedInUser: state.loginUser,
+    blogs: state.blogs
   }
 }
 export default connect(
   mapStateToProps,
-  { showInfoNotification, 
-    showErrorNotification, 
+  { showInfoNotification,
+    showErrorNotification,
     hideNotification,
-    showUsers,
-    setBlogs,
+    getUsers,
+    getBlogs,
     addBlog,
     loginUser,
     logoutUser
