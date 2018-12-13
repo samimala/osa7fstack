@@ -1,10 +1,15 @@
 const path = require('path')
 
 const config = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill','./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    compress: true,
+    port: 3000      
   },
   module: {
     rules: [
@@ -18,8 +23,8 @@ const config = {
             'transform-object-rest-spread'
           ]
         }
-      } 
-    ]  
+      }
+    ]
   }
 }
 module.exports = config
