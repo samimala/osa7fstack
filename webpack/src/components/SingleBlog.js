@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addLikeToBlog  } from '../reducers/blogsReducer'
+import { addLikeToBlog, getBlogs } from '../reducers/blogsReducer'
 import BlogComments from './BlogComments'
 import BlogCommentForm from './BlogCommentForm'
 import { Divider } from 'semantic-ui-react'
@@ -14,8 +14,13 @@ class SingleBlog extends React.Component {
   }
 
   render() {
-    console.log('blogs: ', this.props.blog)
-    const blog = this.props.blog
+    if (!this.props.blogs || this.props.blogs.length===0) {
+      this.props.getBlogs()
+      return (null)
+    }
+
+    console.log('blogs: ', this.props.blogs)
+    const blog = this.props.blogs.find(blog => this.props.blogid===blog.id)
 
     console.log('Single blog', blog)
     return(
@@ -45,8 +50,12 @@ class SingleBlog extends React.Component {
   }
 }
 
-
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs
+  }
+}
 
 export default connect (
-  null,
-  { addLikeToBlog })(SingleBlog)
+  mapStateToProps,
+  { addLikeToBlog, getBlogs })(SingleBlog)

@@ -112,7 +112,7 @@ class App extends React.Component {
               <Route exact path="/users" render={()=> <Users />} />
               <Route exact path="/blogs" render={()=> <BlogView />} />
               <Route exact path="/blogs/:id" render={({match}) => (
-                <SingleBlog blog={this.props.blogs.find(blog=>blog.id===match.params.id)}/>)}/>
+                <SingleBlog blogid={match.params.id}/>)}/>
 
               <Route exact path="/users/:id" render={({match})=> {
                 console.log('This: ', this)
